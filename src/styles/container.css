@@ -1,0 +1,24 @@
+:root {
+  --container-padding: calc(110 * var(--u));
+  --container-max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --container-padding: calc(20 / var(--root-size) * 1rem);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* Breaks a child out of the container to full viewport width. */
+.container > .full-bleed {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}

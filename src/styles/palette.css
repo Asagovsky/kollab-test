@@ -1,0 +1,53 @@
+:root {
+  /* palette */
+  --color-black: #050608;
+  --color-white: #ffffff;
+  --color-yellow: #f0ff56;
+
+  --color-black-secondary: #0a0a0a;
+
+  --gradient-text: linear-gradient(
+    -77.65deg,
+    rgba(255, 255, 255, 0.34) 30.68%,
+    rgba(255, 255, 255, 1) 80.11%
+  );
+
+  /* semantic */
+  --background: var(--color-black);
+  --background-elevated: var(--color-black-secondary);
+
+  --foreground: var(--color-white);
+  --foreground-muted: rgb(255 255 255 / 0.7);
+  --foreground-subtle: rgb(255 255 255 / 0.2);
+
+  --accent: var(--color-yellow);
+  --accent-foreground: var(--color-black);
+
+  --border: rgb(255 255 255 / 0.15);
+  --border-subtle: rgb(255 255 255 / 0.07);
+
+  --overlay: rgb(255 255 255 / 0.08);
+
+  --focus-ring: var(--color-yellow);
+
+  --selection-background: var(--color-yellow);
+  --selection-foreground: var(--color-black);
+}
+
+::selection {
+  background: var(--selection-background);
+  color: var(--selection-foreground);
+}
+
+.gradient-text {
+  color: var(--color-white);
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gradient-text {
+    color: transparent;
+  }
+}
