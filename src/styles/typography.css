@@ -1,12 +1,12 @@
 :root {
   /* Change these three numbers to retune the whole scale. Unitless. */
-  --design-width: 1515; /* desktop */
+  --design-width: 1512; /* desktop */
   --min-width: 768; /* tablet */
   --root-size: 16; /* rem unit */
 
   /* One design pixel as a share of the viewport: 100 / 1515 vw. */
   --u-fluid: calc(100 / var(--design-width) * 1vw);
-  --u-floor: calc(var(--min-width) / var(--design-width) / var(--root-size) * 1rem);
+  --u-floor: calc(0.75 / var(--root-size) * 1rem);
 
   --u: max(var(--u-floor), var(--u-fluid));
 
@@ -14,6 +14,16 @@
     var(--font-monument-next, 'PP Monument Narrow'), 'Arial Narrow', system-ui, sans-serif;
   --font-sequel: var(--font-sequel-next, 'Sequel Sans'), system-ui, sans-serif;
   --font-proto: var(--font-proto-next, 'Proto Mono'), ui-monospace, monospace;
+  --font-pixelify: var(--font-pixelify-next, 'Pixelify Sans'), ui-monospace, monospace;
+}
+
+/* Below the tablet breakpoint the layout follows the 393 mobile design. */
+@media (max-width: 767px) {
+  :root {
+    --mobile-design-width: 393;
+
+    --u: min(calc(100 / var(--mobile-design-width) * 1vw), calc(1.1 / var(--root-size) * 1rem));
+  }
 }
 
 :root {

@@ -67,4 +67,23 @@ export const protoMono = localFont({
   preload: true,
 })
 
-export const fontVariables = [monument.variable, sequelSans.variable, protoMono.variable].join(' ')
+/* pixelify sans font */
+export const pixelifySans = localFont({
+  src: [
+    {
+      path: '../../public/fonts/PixelifySans-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-pixelify-next',
+  display: 'swap',
+  preload: true,
+})
+
+export const fontVariables = [
+  monument.variable,
+  sequelSans.variable,
+  protoMono.variable,
+  pixelifySans.variable,
+].join(' ')

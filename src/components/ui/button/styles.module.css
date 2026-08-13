@@ -1,0 +1,64 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  padding-inline: calc(3 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(9 * var(--u));
+  cursor: pointer;
+}
+
+.tertiary {
+  background: var(--surface-glass);
+  border: 1px solid var(--border-subtle);
+  color: var(--foreground);
+}
+
+.tertiary:hover .badge,
+.tertiary:focus-visible .badge {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: calc(26 * var(--u));
+  height: calc(26 * var(--u));
+  margin-block: calc(3 * var(--u));
+  border-radius: calc(7.689 * var(--u));
+  background: var(--foreground);
+  color: var(--background);
+  transition: background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.badge svg {
+  transition: color calc(var(--duration-fast)) var(--ease-out-quart);
+}
+
+.label {
+  white-space: nowrap;
+  text-transform: none;
+}
+
+@media (max-width: 767px) {
+  .button {
+    gap: calc(7 * var(--u));
+    padding-inline: calc(4 * var(--u)) calc(16 * var(--u));
+  }
+
+  .badge {
+    width: calc(32 * var(--u));
+    height: calc(32 * var(--u));
+    margin-block: calc(3 * var(--u));
+  }
+
+  .badge svg {
+    width: calc(15.6 * var(--u));
+    height: calc(15.6 * var(--u));
+  }
+
+  .label {
+    font-size: calc(14 * var(--u));
+  }
+}

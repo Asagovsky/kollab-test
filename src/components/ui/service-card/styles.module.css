@@ -1,0 +1,179 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(487 * var(--u));
+  padding: calc(30 * var(--u));
+  padding-bottom: calc(26 * var(--u));
+  overflow: clip;
+  border-radius: 0;
+  transition: border-radius var(--duration-base) var(--ease-out-quart);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border-muted);
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.pattern,
+.glow {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out-quart);
+}
+
+.pattern {
+  left: calc(-1 * var(--u));
+  top: calc(130 * var(--u));
+  width: calc(387 * var(--u));
+  height: calc(133.448 * var(--u));
+  object-fit: cover;
+}
+
+.glow {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    58% 52% at 16% 4%,
+    rgb(100 56 214 / 0.36),
+    rgb(100 56 214 / 0.2) 45%,
+    rgb(100 56 214 / 0.05) 78%,
+    rgb(100 56 214 / 0) 100%
+  );
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: calc(24 * var(--u));
+  width: calc(314 * var(--u));
+  max-width: 100%;
+}
+
+.index {
+  color: var(--foreground-dim);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--u));
+}
+
+.description {
+  opacity: 0.5;
+}
+
+.action {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+}
+
+.card:focus-within {
+  border-radius: calc(16 * var(--u));
+}
+
+.card:focus-within::after {
+  opacity: 1;
+}
+
+.card:focus-within .pattern {
+  opacity: 0.24;
+}
+
+.card:focus-within .glow {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .card {
+    min-height: calc(430 * var(--u));
+    padding: calc(20 * var(--u));
+    padding-bottom: calc(24 * var(--u));
+    border-radius: calc(16 * var(--u));
+  }
+
+  .card::after {
+    opacity: 1;
+  }
+
+  .pattern {
+    left: calc(-119 * var(--u));
+    top: calc(9 * var(--u));
+    width: calc(439 * var(--u));
+    height: calc(151 * var(--u));
+  }
+
+  .active .pattern,
+  :global(.swiper-slide-active) .pattern {
+    opacity: 0.24;
+  }
+
+  .active .glow,
+  :global(.swiper-slide-active) .glow {
+    opacity: 1;
+  }
+
+  .content {
+    width: calc(281 * var(--u));
+    gap: calc(20 * var(--u));
+  }
+
+  .text {
+    gap: calc(12 * var(--u));
+  }
+
+  .card .index {
+    font-size: calc(12 * var(--u));
+    line-height: calc(12 * var(--u));
+  }
+
+  .card .title {
+    font-size: calc(18 * var(--u));
+    line-height: calc(24 * var(--u));
+  }
+
+  .card .description {
+    font-size: calc(14 * var(--u));
+    line-height: calc(18 * var(--u));
+  }
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-radius: calc(16 * var(--u));
+  }
+
+  .card:hover::after {
+    opacity: 1;
+  }
+
+  .card:hover .pattern {
+    opacity: 0.24;
+  }
+
+  .card:hover .glow {
+    opacity: 1;
+  }
+}
