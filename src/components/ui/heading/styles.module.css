@@ -2,6 +2,12 @@
   text-wrap: balance;
 }
 
+/* Hidden until the split reveal takes over, so no unsplit text flashes first.
+   The noscript rule in the root layout restores it when JS never runs. */
+.pending {
+  visibility: hidden;
+}
+
 .heading i {
   font-family: var(--font-pixelify);
   font-style: normal;
@@ -9,13 +15,20 @@
   letter-spacing: 0;
 }
 
-.heading img,
-.heading svg {
+/* Own mask for the icon: SplitText only splits text nodes, so the icon needs
+   its own clipping box to rise out of. Box metrics live here, not on the img. */
+.icon {
   display: inline-block;
-  width: auto;
-  height: var(--heading-icon-height, 0.928em);
+  overflow: clip;
   margin-inline: var(--heading-icon-inset, -0.2em);
   vertical-align: var(--heading-icon-offset, -0.063em);
+}
+
+.heading img,
+.heading svg {
+  display: block;
+  width: auto;
+  height: var(--heading-icon-height, 0.928em);
 }
 
 .heading:global(.gradient-text) {
@@ -32,14 +45,15 @@
 }
 
 @media (max-width: 767px) {
-  .heading img,
-  .heading svg {
-    display: inline-block;
-    width: auto;
-    height: var(--heading-icon-height, 1.2em);
+  .icon {
     margin-left: var(--heading-icon-inset, -0.2em);
     margin-right: var(--heading-icon-inset, -0.5em);
     margin-top: var(--heading-icon-inset, -0.1em);
     vertical-align: var(--heading-icon-offset, -0.2em);
+  }
+
+  .heading img,
+  .heading svg {
+    height: var(--heading-icon-height, 1.2em);
   }
 }

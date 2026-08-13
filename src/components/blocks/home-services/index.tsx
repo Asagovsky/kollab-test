@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useSyncExternalStore } from 'react'
+import { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { Heading } from '@/components/ui/heading'
+import { useIsMobile } from '@/hooks/use-media-query'
+import { useStaggerReveal } from '@/hooks/use-stagger-reveal'
 import { ServiceCard } from '@/components/ui/service-card'
 import type { ServiceCardAction } from '@/components/ui/service-card/types'
 import type {
@@ -15,7 +17,6 @@ import type {
 import styles from './styles.module.css'
 
 const FALLBACK_ICON = '/icons/heading-star.svg'
-const MOBILE_QUERY = '(max-width: 767px)'
 
 const toImage = (image: MediaValue | undefined, fallbackAlt: string) =>
   typeof image === 'object' && image?.url
@@ -34,26 +35,14 @@ const toAction = (action: HomeServicesAction): ServiceCardAction => {
   }
 }
 
-const subscribeToMobile = (onChange: () => void) => {
-  const query = window.matchMedia(MOBILE_QUERY)
-
-  query.addEventListener('change', onChange)
-
-  return () => query.removeEventListener('change', onChange)
-}
-
-const useIsMobile = () =>
-  useSyncExternalStore(
-    subscribeToMobile,
-    () => window.matchMedia(MOBILE_QUERY).matches,
-    () => false,
-  )
-
 export const HomeServices = ({ eyebrow, title, description, services = [] }: HomeServicesProps) => {
   const icon = toImage(title.icon, '') ?? { src: FALLBACK_ICON, alt: '' }
   const isMobile = useIsMobile()
   const [activeIndex, setActiveIndex] = useState(0)
   const items = services ?? []
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  useStaggerReveal(gridRef, { enabled: !isMobile, pendingClass: styles.pending })
 
   const renderCard = (service: HomeServicesService, index: number, active: boolean) => (
     <ServiceCard
@@ -82,6 +71,7 @@ export const HomeServices = ({ eyebrow, title, description, services = [] }: Hom
             align="center"
             icon={<img src={icon.src} alt={icon.alt} />}
             gradient
+            animated
             className={styles.title}
           >
             {title.text}
@@ -103,7 +93,7 @@ export const HomeServices = ({ eyebrow, title, description, services = [] }: Hom
             ))}
           </Swiper>
         ) : (
-          <div className={styles.grid}>
+          <div ref={gridRef} data-reveal className={`${styles.grid} ${styles.pending}`}>
             {items.map((service, index) => renderCard(service, index, index === 0))}
           </div>
         )}

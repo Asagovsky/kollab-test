@@ -1,14 +1,21 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { IconProps } from './types'
 
 const isSvg = (src: string) => /\.svg(\?.*)?$/i.test(src)
 
 const cache = new Map<string, string>()
 
-export const Icon = ({ src, alt = '', className }: IconProps) => {
+export const Icon = ({ src, alt = '', className, onReady }: IconProps) => {
   const [markup, setMarkup] = useState(() => cache.get(src))
+  const onReadyRef = useRef(onReady)
+
+  onReadyRef.current = onReady
+
+  useEffect(() => {
+    if (!isSvg(src) || markup) onReadyRef.current?.()
+  }, [src, markup])
 
   useEffect(() => {
     if (!isSvg(src) || cache.has(src)) {

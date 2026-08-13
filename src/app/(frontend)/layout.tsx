@@ -12,6 +12,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en" className={fontVariables}>
+      <head>
+        <noscript>
+          <style>{`[data-reveal], [data-reveal] > * { visibility: visible !important; opacity: 1 !important; }`}</style>
+        </noscript>
+      </head>
       <body>
         <main>{children}</main>
       </body>

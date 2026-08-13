@@ -61,6 +61,14 @@
   margin-top: calc(75 * var(--u));
 }
 
+/* Hidden until the stagger reveal takes over, so no card flashes first.
+   The noscript rule in the root layout restores them when JS never runs. */
+@media (min-width: 768px) {
+  .pending > * {
+    opacity: 0;
+  }
+}
+
 .card {
   border-right: 1px solid var(--border-muted);
   border-bottom: 1px solid transparent;
