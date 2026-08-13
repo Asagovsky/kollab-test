@@ -1,11 +1,13 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { Heading } from '@/components/ui/heading'
 import { useIsMobile } from '@/hooks/use-media-query'
 import { useStaggerReveal } from '@/hooks/use-stagger-reveal'
+import { Icon } from '@/components/ui/icon'
 import { ServiceCard } from '@/components/ui/service-card'
 import type { ServiceCardAction } from '@/components/ui/service-card/types'
 import type {
@@ -31,7 +33,7 @@ const toAction = (action: HomeServicesAction): ServiceCardAction => {
     variant: action.variant,
     url: action.url ?? undefined,
     newTab: action.newTab ?? undefined,
-    icon: customIcon ? <img src={customIcon.src} alt={customIcon.alt} /> : undefined,
+    icon: customIcon ? <Icon src={customIcon.src} alt={customIcon.alt} /> : undefined,
   }
 }
 
@@ -59,8 +61,24 @@ export const HomeServices = ({ eyebrow, title, description, services = [] }: Hom
 
   return (
     <section className={styles.section}>
-      <img className={styles.dots} src="/images/services-bg.png" alt="" aria-hidden />
-      <img className={styles.glow} src="/images/services-bg2.png" alt="" aria-hidden />
+      <Image
+        className={styles.dots}
+        src="/images/services-bg.png"
+        alt=""
+        width={3024}
+        height={618}
+        priority
+        aria-hidden
+      />
+      <Image
+        className={styles.glow}
+        src="/images/services-bg2.png"
+        alt=""
+        width={2621}
+        height={1205}
+        priority
+        aria-hidden
+      />
 
       <div className={`container ${styles.inner}`}>
         <header className={styles.header}>
@@ -69,7 +87,7 @@ export const HomeServices = ({ eyebrow, title, description, services = [] }: Hom
             as={title.semanticTag}
             variant={title.styleTag}
             align="center"
-            icon={<img src={icon.src} alt={icon.alt} />}
+            icon={icon}
             gradient
             animated
             className={styles.title}

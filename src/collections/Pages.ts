@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { metaField } from './components/Meta'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -25,6 +26,7 @@ export const Pages: CollectionConfig = {
         description: 'Path segment. Use "home" for the front page.',
       },
     },
+    metaField(),
     {
       name: 'layout',
       type: 'blocks',

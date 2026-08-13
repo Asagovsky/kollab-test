@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Heading } from '@/components/ui/heading'
 import type { ServiceCardProps } from './types'
@@ -13,9 +14,24 @@ export const ServiceCard = ({
   className,
 }: ServiceCardProps) => (
   <article className={[styles.card, active && styles.active, className].filter(Boolean).join(' ')}>
-    <img className={styles.pattern} src="/images/service-card-bg-element.png" alt="" />
+    <Image
+      className={styles.pattern}
+      src="/images/service-card-bg-element.png"
+      alt=""
+      width={464}
+      height={160}
+      aria-hidden
+    />
     <span className={styles.glow} aria-hidden />
-    {image ? <img className={styles.image} src={image.src} alt={image.alt} /> : null}
+    {image ? (
+      <Image
+        className={styles.image}
+        src={image.src}
+        alt={image.alt}
+        fill
+        sizes="(max-width: 767px) 90vw, 33vw"
+      />
+    ) : null}
 
     <div className={styles.content}>
       <span className={`label ${styles.index}`}>{index}</span>

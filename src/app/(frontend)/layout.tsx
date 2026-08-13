@@ -1,10 +1,15 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import { fontVariables } from '@/fonts'
+import { serverUrl } from '@/lib/metadata'
 import './styles.css'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+// Relative og:image and og:url values from the CMS resolve against this.
+export const metadata: Metadata = {
+  metadataBase: new URL(serverUrl),
+  description:
+    'We help Web3 and crypto projects build strong brands, engage communities, and scale growth.',
+  title: 'TheKollab',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

@@ -260,9 +260,37 @@ export interface Page {
    * Path segment. Use "home" for the front page.
    */
   slug: string;
+  meta: MetaField;
   layout: HomeServicesBlock[];
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetaField".
+ */
+export interface MetaField {
+  /**
+   * Browser tab and search result title. Falls back to the page title.
+   */
+  title?: string | null;
+  /**
+   * Search result snippet. Around 150 characters reads best.
+   */
+  description?: string | null;
+  /**
+   * Shared when the page is linked. 1200x630 or wider.
+   */
+  image?: (number | null) | Media;
+  /**
+   * Only fill these in to differ from the SEO fields above.
+   */
+  og: {
+    title?: string | null;
+    type: 'website' | 'article' | 'profile';
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -394,9 +422,27 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  meta?: T | MetaFieldSelect<T>;
   layout?: T | {};
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetaField_select".
+ */
+export interface MetaFieldSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  og?:
+    | T
+    | {
+        title?: T;
+        type?: T;
+        description?: T;
+        image?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

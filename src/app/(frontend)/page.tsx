@@ -1,9 +1,11 @@
+import { cache } from 'react'
 import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 import config from '@payload-config'
 import { RenderBlocks } from '@/components/blocks'
+import { toMetadata } from '@/lib/metadata'
 
-export default async function HomePage() {
+const getHomePage = cache(async () => {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'pages',
@@ -12,7 +14,17 @@ export default async function HomePage() {
     depth: 1,
   })
 
-  const page = docs[0]
+  return docs[0]
+})
+
+export async function generateMetadata() {
+  const page = await getHomePage()
+
+  return toMetadata(page)
+}
+
+export default async function HomePage() {
+  const page = await getHomePage()
 
   if (!page) notFound()
 

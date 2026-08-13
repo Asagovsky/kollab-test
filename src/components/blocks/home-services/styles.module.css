@@ -21,8 +21,8 @@
 }
 
 .glow {
-  left: calc(387 * var(--u));
-  top: calc(-241 * var(--u));
+  left: calc(150 * var(--u));
+  top: calc(-20 * var(--u));
   width: calc(1516 * var(--u));
   height: calc(697 * var(--u));
   rotate: -1.6deg;
