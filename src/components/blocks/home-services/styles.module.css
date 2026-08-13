@@ -47,7 +47,8 @@
 
 .title {
   max-width: calc(600 * var(--u));
-  line-height: 0.73;
+  line-height: 0.76;
+  margin-top: calc(-3 * var(--u)); /* fix top clip  */
 }
 
 .description {

@@ -18,21 +18,40 @@ const toIconNode = (icon: HeadingProps['icon'], onReady: () => void): ReactNode 
 
 const TOKEN = /(\*[^*]+\*|\{icon\})/g
 
+const renderPart = (part: string, key: number, icon?: ReactNode): ReactNode => {
+  if (part === '{icon}') {
+    return icon ? (
+      <span key={key} className={styles.icon} data-split-icon aria-hidden>
+        {icon}
+      </span>
+    ) : null
+  }
+
+  if (part.startsWith('*') && part.endsWith('*')) {
+    return <i key={key}>{part.slice(1, -1)}</i>
+  }
+
+  return <Fragment key={key}>{part}</Fragment>
+}
+
+// Words are grouped before the tokens inside them are rendered: a word mixing
+// plain text with a styled token becomes several inline-block units once
+// SplitText runs, and the line is free to break between them — so "SERVICE*S*"
+// drops its S onto the next line as soon as the copy is long enough to wrap.
+// Holding each mixed word in one nowrap box removes that break opportunity.
 const parse = (text: string, icon?: ReactNode): ReactNode =>
-  text.split(TOKEN).map((part, index) => {
-    if (part === '{icon}') {
-      return icon ? (
-        <span key={index} className={styles.icon} data-split-icon aria-hidden>
-          {icon}
-        </span>
-      ) : null
-    }
+  text.split(/(\s+)/).map((chunk, index) => {
+    if (!chunk.trim()) return <Fragment key={index}>{chunk}</Fragment>
 
-    if (part.startsWith('*') && part.endsWith('*')) {
-      return <i key={index}>{part.slice(1, -1)}</i>
-    }
+    const parts = chunk.split(TOKEN).filter(Boolean)
 
-    return <Fragment key={index}>{part}</Fragment>
+    if (parts.length === 1) return renderPart(parts[0], index, icon)
+
+    return (
+      <span key={index} className={styles.word}>
+        {parts.map((part, partIndex) => renderPart(part, partIndex, icon))}
+      </span>
+    )
   })
 
 export const Heading = ({

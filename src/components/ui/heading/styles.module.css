@@ -15,6 +15,12 @@
   letter-spacing: 0;
 }
 
+/* Keeps a word that mixes plain text with a styled token on one line: after the
+   split each piece is its own inline-block, which is otherwise a break point. */
+.word {
+  white-space: nowrap;
+}
+
 /* Own mask for the icon: SplitText only splits text nodes, so the icon needs
    its own clipping box to rise out of. Box metrics live here, not on the img. */
 .icon {

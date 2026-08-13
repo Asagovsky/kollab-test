@@ -1,67 +1,30 @@
-# Payload Blank Template
+# TheKollab
 
-This template comes configured with the bare minimum to get started on anything you need.
+Next.js 16 (App Router) + Payload CMS 3, SQLite, CSS Modules, GSAP.
 
-## Quick start
+## Run it
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+```bash
+pnpm install
+pnpm dev
+```
 
-## Quick Start - local setup
+Frontend is on http://localhost:3000. It looks up the `pages` doc with slug `home` and hands its layout to `RenderBlocks`.
 
-To spin up this template locally, follow these steps:
+Admin is on http://localhost:3000/admin, login `admin@admin.com` / `Admin`.
 
-### Clone
+`.env` and `thekollab.db` are committed on purpose, so the home page and the admin user are already there on a fresh clone. No migration or seed step. This is a preview build only. The secret in it is throwaway and both files come out of the repo before anything goes to production.
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+## Adding the next block
 
-### Development
+A block lives in two places, the CMS config and the React component, joined by its `blockType`.
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+1. Add a config file to [src/collections/blocks/](src/collections/blocks/). Keep the defaults in a separate exported object so the Figma copy is pre-filled for editors, and build heading and button fields with [headingField](src/collections/components/Heading.ts) and [buttonField](src/collections/components/Button.ts) instead of redeclaring them.
+2. Register it: add the block to `blocks` in [src/payload.config.ts](src/payload.config.ts), and its slug to `blockReferences` in [src/collections/Pages.ts](src/collections/Pages.ts#L33).
+3. Add a component folder under [src/components/blocks/](src/components/blocks/), laid out like [home-services/](src/components/blocks/home-services/).
+4. Add a `case` for the slug to the switch in [src/components/blocks/index.tsx](src/components/blocks/index.tsx).
+5. Style it from the tokens in [src/styles/](src/styles/) (`palette.css`, `typography.css`, `container.css`, `motion.css`). No hardcoded colors, type sizes, or gutters in block CSS.
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+## Not reproduced from Figma
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
-
-#### Docker (Optional)
-
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
-
-To do so, follow these steps:
-
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
-
-## How it works
-
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
-
-### Collections
-
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+Card images. The upload field is on the services array, but nothing renders it yet. In the Figma the artwork sits at a different offset and scale on every card, so one fixed CSS rule would break most of them. The plan is to expose percentage-based offset and size fields in the CMS so each card gets positioned by the editor.
